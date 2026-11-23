@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MR ACADEMY - Ethical Hacking PRO</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#050807;color:#fff;overflow-x:hidden}
+.page{display:none!important;min-height:100vh}
+.page.active{display:block!important}
+#splash{display:none!important;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:radial-gradient(circle at 50% 20%,#0a2a12 0%,#000 70%);text-align:center;padding:20px}
+#splash.active{display:flex!important}
+.splash-logo{width:110px;height:110px;background:#0f0f0f;border:2px solid #00FF00;border-radius:28px;display:flex;align-items:center;justify-content:center;font-size:55px;box-shadow:0 0 30px rgba(0,255,0,.3)}
+.splash-title{font-size:46px;font-weight:900;color:#00FF00;margin-top:16px;text-shadow:0 0 25px #00FF00}
+.splash-sub{color:#FF3B30;font-size:11px;letter-spacing:2px;margin-top:6px;font-weight:700}
+.bar-wrap{width:88%;max-width:380px;height:12px;background:#1a1a1a;border-radius:20px;margin-top:28px;overflow:hidden}
+#bar{height:100%;width:0%;background:#00FF00}
+#loadTxt{color:#00FF00;margin-top:10px;font-family:monospace}
+.skip{margin-top:18px;background:#222;color:#fff;border:1px solid #333;padding:10px 22px;border-radius:20px}
+.topbar{position:sticky;top:0;z-index:10;background:#050807;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #1a1a1a}
+.topbar b{color:#00FF00;font-size:20px}
+.topbar span{background:#FF0000;padding:4px 10px;border-radius:20px;font-size:11px;cursor:pointer}
+.xpbar{background:#111;border-bottom:1px solid #222;padding:10px 18px;display:flex;justify-content:space-between;align-items:center;font-size:12px}
+.xp-track{height:8px;background:#222;border-radius:20px;overflow:hidden;margin-top:6px}
+#xpFill{height:100%;width:0%;background:linear-gradient(90deg,#00FF00,#00AAFF)}
+.hero{padding:22px 20px 10px;text-align:center}
+.hero h1{font-size:46px;color:#00FF00;text-shadow:0 0 30px rgba(0,255,0,.5)}
+.hero p{color:#FF3B30;font-size:11px;margin-top:8px;font-weight:700}
+.hero h2{font-size:20px;margin-top:12px}
+.hero .desc{color:#999;font-size:13px;margin-top:8px;line-height:1.6}
+.stats{display:flex;gap:10px;padding:14px 20px}
+.stat{flex:1;background:#0E1512;border:1px solid #1e2a22;border-radius:16px;padding:12px 6px;text-align:center}
+.stat b{font-size:19px;display:block}
+.stat span{font-size:11px;color:#999}
+.grid{padding:6px 18px 20px;display:flex;flex-direction:column;gap:12px}
+.big-card{border-radius:20px;padding:20px;display:flex;align-items:center;gap:14px;cursor:pointer}
+.big-card .icon{width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px}
+.big-card h3{font-size:18px}
+.big-card p{font-size:12px;opacity:.85;margin-top:2px}
+.card-blue{background:linear-gradient(135deg,#0066FF,#003399)}.card-blue .icon{background:rgba(255,255,255,.22)}
+.card-green{background:linear-gradient(135deg,#00D600,#007A00)}.card-green .icon{background:rgba(255,255,255,.22)}
+.card-orange{background:linear-gradient(135deg,#FF8800,#CC3300)}.card-orange .icon{background:rgba(255,255,255,.22)}
+.card-purple{background:linear-gradient(135deg,#AA00FF,#5500AA)}.card-purple .icon{background:rgba(255,255,255,.22)}
+.card-dark{background:#121212;border:1px solid #222}.card-dark .icon{background:#222}
+.stage{margin:0 16px 14px;background:#0F0F0F;border:1px solid #222;border-radius:20px;padding:16px}
+.stage.locked{opacity:.5}
+.stage h3{font-size:18px}
+.stage .meta{font-size:12px;color:#FFAA00;margin:6px 0}
+.stage p{color:#ccc;font-size:13px;line-height:1.7}
+.stage .lessons-list{margin-top:10px;display:flex;flex-direction:column;gap:8px}
+.lesson-row{background:#000;border:1px solid #222;border-radius:12px;padding:12px;display:flex;justify-content:space-between;align-items:center;gap:10px;cursor:pointer}
+.lesson-row.done{border-color:#00FF00;background:#061206}
+.lesson-row b{font-size:13px}
+.lesson-row span{font-size:11px;color:#999}
+.check{width:28px;height:28px;border-radius:50%;background:#222;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px}
+.lesson-row.done .check{background:#00FF00;color:#000}
+.page-head{padding:20px;text-align:center}
+.page-head h2{font-size:23px}
+.page-head p{color:#999;font-size:12px;margin-top:6px}
+.lesson-box{background:#0F0F0F;border:1px solid #222;border-radius:18px;padding:16px;margin:0 16px 12px}
+.lesson-box h3{color:#00FF00}
+.lesson-box p,.lesson-box li{color:#ccc;font-size:13px;line-height:1.8}
+.lesson-box ul{margin:8px 16px 0 0}
+.lesson-box .task{background:#000;border:1px solid #222;border-radius:12px;padding:12px;margin-top:10px;color:#00FF00;font-family:monospace;font-size:12px;direction:ltr;text-align:left}
+.lesson-box .secret{background:#1a0a00;border:1px solid #FFAA00;border-radius:12px;padding:12px;margin-top:10px;color:#FFD580;font-size:13px}
+.quiz{background:#0F0F0F;border:1px solid #0066FF;border-radius:18px;padding:16px;margin:12px 16px}
+.quiz h3{color:#00AAFF}
+.quiz button{display:block;width:100%;margin-top:8px;padding:12px;background:#1a1a1a;color:#fff;border:1px solid #333;border-radius:12px;text-align:right;cursor:pointer}
+.quiz button:hover{border-color:#00AAFF}
+.cats{display:flex;gap:8px;overflow-x:auto;padding:0 16px 12px;white-space:nowrap}
+.cat{background:#161616;border:1px solid #222;color:#ddd;padding:8px 16px;border-radius:20px;white-space:nowrap}
+.cat.active{background:#00FF00;color:#000;font-weight:900}
+.cards{padding:0 16px 20px;display:flex;flex-direction:column;gap:12px}
+.cmd{background:#0F0F0F;border:1px solid #1e1e1e;border-radius:18px;padding:14px}
+.cmd b{font-size:14px}
+.cmd span{display:block;color:#FFAA00;font-size:12px;margin-top:3px}
+.cmd-code{background:#000;margin-top:10px;padding:12px;border-radius:12px;display:flex;justify-content:space-between;gap:10px;direction:ltr}
+.cmd-code code{color:#00FF00;font-family:monospace;font-size:13px;word-break:break-all}
+.copy-btn{background:#FF0000;color:#fff;border:none;padding:7px 12px;border-radius:8px}
+.lab{background:#0F0F0F;border:1px solid #222;border-radius:18px;padding:16px;margin:0 16px}
+.lab input{width:100%;padding:12px;background:#000;color:#fff;border:1px solid #333;border-radius:12px;margin-top:10px}
+.lab .out{background:#000;border:1px solid #222;border-radius:12px;padding:12px;margin-top:10px;min-height:80px;color:#00FF00;font-family:monospace;font-size:12px;white-space:pre-wrap;direction:ltr;text-align:left}
+.btn{width:calc(100% - 32px);margin:12px 16px;padding:16px;border:none;border-radius:14px;font-size:16px;font-weight:900;cursor:pointer}
+.btn-green{background:#00CC00;color:#fff}.btn-dark{background:#1a1a1a;color:#fff;border:1px solid #2a2a2a}.btn-blue{background:#0066FF;color:#fff}.btn-red{background:#FF0000;color:#fff}.btn-orange{background:#FF8800;color:#fff}
+.profile{padding:20px;text-align:center}
+.avatar{width:110px;height:110px;margin:0 auto;background:linear-gradient(135deg,#FF0000,#7a0000);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:40px;font-weight:900}
+.cert{background:linear-gradient(135deg,#0a2a12,#000);border:2px solid #FFAA00;border-radius:20px;padding:20px;margin:16px;text-align:center}
+.cert h2{color:#FFAA00}
+.foot{text-align:center;color:#444;font-size:11px;padding:10px 0 20px}
+</style>
+</head>
+<body>
+<div id="splash" class="page active"><div class="splash-logo">&gt;_</div><div class="splash-title">MR ACADEMY</div><div class="splash-sub">ETHICAL HACKING • PRO LEVEL</div><div style="margin-top:14px">من مبتدئ لمحترف في 4 مراحل</div><div class="bar-wrap"><div id="bar"></div></div><div id="loadTxt">Loading.. 0%</div><button class="skip" onclick="showPage('p1')">ادخل الاكاديمية ›</button></div>
+
+<div id="p1" class="page">
+<div class="topbar"><b>&gt;_ MR ACADEMY</b><span onclick="showPage('pProfile')">بروفايلي</span></div>
+<div class="xpbar"><div style="flex:1"><div><b id="xpText">المستوى: مبتدئ | XP: 0</b> <span style="color:#999">- <span id="progText">0% خلصت</span></span></div><div class="xp-track"><div id="xpFill"></div></div></div></div>
+<div class="hero"><h1>MR ACADEMY</h1><p>ETHICAL HACKING • PRO LEVEL</p><h2>اتعلم، جرب، خد نقاط، اعلى بمستواك</h2><div class="desc">مش فيديوهات وخلاص. هنا هتذاكر درس، تحل تحدي، تجرب في اللاب بتاعنا، وتعدي اختبار عشان تفتح المرحلة اللي بعدها. زي اللعبة بالظبط.</div></div>
+<div class="stats"><div class="stat"><b id="statLessons">0/20</b><span>درس خلص</span></div><div class="stat"><b id="statChal">0/8</b><span>تحدي خلص</span></div><div class="stat"><b id="statXP">0 XP</b><span>نقاطك</span></div></div>
+<div class="grid">
+<div class="big-card card-blue" onclick="showPage('pRoad')"><div class="icon">🗺️</div><div><h3>خارطة الطريق - 4 مراحل</h3><p>ابدأ من هنا، امشي بالترتيب</p></div><div style="margin-right:auto">‹</div></div>
+<div class="big-card card-green" onclick="showPage('pLab')"><div class="icon">🧪</div><div><h3>لاب MR - جرب اللي اتعلمته</h3><p>موقعنا الوهمي، جرب عليه بأمان</p></div><div style="margin-right:auto">‹</div></div>
+<div class="big-card card-orange" onclick="showPage('pChal')"><div class="icon">🏆</div><div><h3>التحديات - 8 تحديات</h3><p>كل تحدي بـ XP، جمعهم كلهم</p></div><div style="margin-right:auto">‹</div></div>
+<div class="big-card card-purple" onclick="showPage('p2')"><div class="icon">▣</div><div><h3>مكتبة الاكواد - 150 كود</h3><p>كل اكواد Termux جاهزة</p></div><div style="margin-right:auto">‹</div></div>
+<div class="big-card card-dark" onclick="showPage('pProfile')"><div class="icon">👤</div><div><h3>بروفايلي وشهادتي</h3><p>تقدمك وشهادتك</p></div><div style="margin-right:auto">‹</div></div>
+</div>
+<div class="foot">MR | MOHAMED RASHIDI - كل واحد مسؤول عن افعاله</div>
+</div>
+
+<div id="pRoad" class="page">
+<div class="topbar"><b>خارطة الطريق</b><span onclick="showPage('p1')">رجوع ‹</span></div>
+<div class="page-head"><h2>4 مراحل - امشي بالترتيب</h2><p>خلص مرحلة وعدي اختبارها عشان تفتح اللي بعدها</p></div>
+<div id="stages"></div>
+<button class="btn btn-dark" onclick="showPage('p1')">رجوع</button>
+</div>
+
+<div id="pLesson" class="page">
+<div class="topbar"><b id="lessonTop">درس</b><span onclick="showPage('pRoad')">رجوع ‹</span></div>
+<div id="lessonContent"></div>
+<div class="quiz" id="quizBox"></div>
+<button class="btn btn-green" id="finishBtn" onclick="finishLesson()">خلصت الدرس - خد +50 XP ✓</button>
+<button class="btn btn-dark" onclick="showPage('pRoad')">رجوع للخارطة</button>
+</div>
+
+<div id="pLab" class="page">
+<div class="topbar"><b>لاب MR</b><span onclick="showPage('p1')">رجوع ‹</span></div>
+<div class="page-head"><h2>موقعنا للتجربة - آمن 100%</h2><p>ده موقع وهمي عملناه ليك، جرب عليه اللي اتعلمته. ممنوع تجرب على اي موقع حقيقي.</p></div>
+<div class="lab"><h3>🔍 تحدي 1: جرب IDOR</h3><p style="color:#ccc;font-size:13px;line-height:1.7;margin-top:6px">عندنا مستخدمين: user/1 و user/2 و user/3. المفروض تشوف بياناتك انت بس. جرب تغير الرقم وشوف هيحصل ايه في اللاب بتاعنا.</p><input id="labInput" placeholder="اكتب: user/2 وجرب" value="user/1"><button class="btn btn-blue" style="width:100%;margin:12px 0 0 0" onclick="tryLab()">جرب في اللاب</button><div class="out" id="labOut">اكتب user/1 او user/2 او user/3 ودوس جرب...</div></div>
+<div class="lab" style="margin-top:12px"><h3>💉 تحدي 2: جرب XSS</h3><p style="color:#ccc;font-size:13px;line-height:1.7;margin-top:6px">اكتب اسمك في البحث. لو كتبت كود، اللاب هيقولك اتصد ولا اتنفذ. ده تعليمي بس.</p><input id="labInput2" placeholder="اكتب اسمك او جرب <script>"><button class="btn btn-orange" style="width:100%;margin:12px 0 0 0" onclick="tryXSS()">جرب البحث</button><div class="out" id="labOut2">اكتب حاجة ودوس جرب...</div></div>
+<div class="lab" style="margin-top:12px"><h3>🛡️ تحدي 3: احمي نفسك</h3><p style="color:#ccc;font-size:13px;line-height:1.7;margin-top:6px">لو حد بعتلك لينك شبه فيسبوك بس الدومين مختلف حرف واحد، هتعمل ايه؟</p><button class="btn btn-green" style="width:100%;margin:12px 0 0 0" onclick="tryProtect()">شوف الحل الصح</button><div class="out" id="labOut3">دوس عشان تشوف الحل...</div></div>
+<button class="btn btn-dark" onclick="showPage('p1')">رجوع</button>
+</div>
+
+<div id="pChal" class="page">
+<div class="topbar"><b>التحديات</b><span onclick="showPage('p1')">رجوع ‹</span></div>
+<div class="page-head"><h2>8 تحديات - جمع XP</h2><p>كل تحدي ليه سؤال، جاوب صح خد نقاط</p></div>
+<div id="chals"></div>
+<button class="btn btn-dark" onclick="showPage('p1')">رجوع</button>
+</div>
+
+<div id="p2" class="page">
+<div class="topbar"><b>اكواد Termux</b><span onclick="showPage('p1')">رجوع ‹</span></div>
+<div class="page-head"><h2>150 كود</h2><p>دوس نسخ والصقه في Termux</p></div>
+<div class="cats"><button onclick="filterCmd('ALL',this)" class="cat active">الكل</button><button onclick="filterCmd('BASIC',this)" class="cat">اساسي</button><button onclick="filterCmd('FILES',this)" class="cat">ملفات</button><button onclick="filterCmd('NET',this)" class="cat">شبكة</button><button onclick="filterCmd('PYTHON',this)" class="cat">بايثون</button><button onclick="filterCmd('GIT',this)" class="cat">Git</button><button onclick="filterCmd('SYS',this)" class="cat">نظام</button></div>
+<div id="cmds" class="cards"></div>
+<button class="btn btn-dark" onclick="showPage('p1')">رجوع</button>
+</div>
+
+<div id="pProfile" class="page">
+<div class="topbar"><b>بروفايلي</b><span onclick="showPage('p1')">رجوع ‹</span></div>
+<div class="profile"><div class="avatar">MR</div><h2>محمد رشيدي</h2><p style="color:#00FF00;font-weight:700">MOHAMED RASHIDI - مؤسس الاكاديمية</p><p style="color:#ccc;line-height:1.8;margin-top:14px;background:#0F0F0F;border:1px solid #1a1a1a;padding:16px;border-radius:16px">انا محمد رشيدي. عملت الاكاديمية دي عشان اعلمك الهاك الاخلاقي بجد، مش كلام محفوظ. اتعلم، جرب في لابنا، وخد شهادتك. <br><br><b>كل واحد مسؤول عن افعاله.</b><br><b>NEVER STOP LEARNING</b></p></div>
+<div id="certBox"></div>
+<div style="padding:0 16px"><input id="myName" placeholder="اكتب اسمك للشهادة" style="width:100%;padding:14px;background:#111;color:#fff;border:1px solid #333;border-radius:12px"><button class="btn btn-orange" style="width:100%;margin:12px 0" onclick="makeCert()">طلع شهادتي 🏆</button></div>
+<button class="btn btn-red" onclick="resetProg()">تصفير التقدم (ابدأ من جديد)</button>
+<button class="btn btn-dark" onclick="showPage('p1')">رجوع</button>
+</div>
+
+<script>
+var STAGES=[
+{title:"المرحلة 1: المبتدئ",color:"#00D600",desc:"اساسيات الهاك الاخلاقي، عقلية الهاكر، لينكس و Termux",lessons:[
+{t:"1.1 عقلية الهاكر",d:"الهاكر مش بيدور على اداة سحرية. بيسأل: ايه المفروض يحصل؟ وايه اللي ممكن يحصل غلط؟",task:"افتح Juice Shop وافهم كل زرار",s:"اللي بيكتب بيلاقي ثغرات اكتر 3 مرات.",q:"ايه اول حاجة يعملها الهاكر؟",opts:["يجرب ادوات عشوائي","يفهم الموقع ويفكر","يخترق على طول"],ans:1},
+{t:"1.2 لينكس و Termux",d:"Termux هو لينكس على موبايلك. اتعلم ls و cd و pwd و mkdir و cat. دي لغتك.",task:"ls -la / pwd / mkdir test",s:"لو مش فاهم لينكس، مش هتفهم هاك.",q:"ايه الامر اللي بيوريك مكانك؟",opts:["ls","pwd","rm"],ans:1},
+{t:"1.3 شبكات للمبتدئين",d:"IP و DNS و Ports. كل موقع ليه IP وكل خدمة ليها منفذ. افهم ده قبل اي حاجة.",task:"ping -c 4 google.com",s:"الشبكات هي الاساس.",q:"الـ DNS بيعمل ايه؟",opts:["بيحول الدومين لـ IP","بيخترق","بيخفي النت"],ans:0},
+{t:"1.4 اخلاقيات الهاكر",d:"ممنوع تجرب على حد من غير اذن كتابي. جرب على لابنا بس. كل واحد مسؤول قدام ربنا والقانون.",task:"اقرا تحذير الاكاديمية تاني",s:"الهاك الاخلاقي = اذن + لاب + تقرير.",q:"امتى تجرب على موقع؟",opts:["لما يكون عندك اذن او لاب","في اي وقت","لما تكون فاضي"],ans:0},
+{t:"1.5 اول Recon",d:"Recon يعني تجمع معلومات علنية من غير ما تلمس الهدف. robots.txt و sitemap و Subdomains.",task:"curl https://example.com/robots.txt",s:"70% من الثغرات من Recon.",q:"Recon معناه ايه؟",opts:["جمع معلومات علنية","اختراق","تخمين باسورد"],ans:0}
+]},
+{title:"المرحلة 2: المتوسط",color:"#0066FF",desc:"ثغرات الويب، XSS و SQLi و IDOR، وازاي تقراهم",lessons:[
+{t:"2.1 IDOR",d:"موقع المفروض يخليك تشوف بياناتك بس. لو غيرت الرقم وشفت بيانات حد تاني، دي IDOR.",task:"جرب في لاب MR: user/2",s:"IDOR من اكتر الثغرات اللي بتجيب فلوس.",q:"IDOR بتحصل لما؟",opts:["تغير رقم وتشوف بيانات حد تاني","تنسى باسوردك","النت يقطع"],ans:0},
+{t:"2.2 XSS",d:"XSS لما الموقع ياخد مدخلاتك ويعرضها من غير فلترة. الحماية: فلترة + تشفير المخرجات.",task:"جرب في لاب MR قسم XSS",s:"لو فهمت الحماية هتعرف تلاقي الثغرة.",q:"حماية XSS هي؟",opts:["فلترة وتشفير المخرجات","حذف الموقع","تغيير الباسورد"],ans:0},
+{t:"2.3 SQLi",d:"SQLi لما المبرمج يربط مدخلاتك بالداتابيز من غير Prepared Statements.",task:"ذاكر على PortSwigger",s:"افهم الحماية مش البايلود.",q:"حماية SQLi هي؟",opts:["Prepared Statements","حذف الداتابيز","تغيير الاسم"],ans:0},
+{t:"2.4 Nmap صح",d:"Nmap مش فحص وخلاص. اعرف الخدمة واصدارها. خدمة قديمة = ثغرة.",task:"nmap -sV 127.0.0.1",s:"دور على خدمة قديمة.",q:"nmap -sV بيعمل ايه؟",opts:["بيجيب اصدار الخدمة","بيخترق","بيحذف"],ans:0},
+{t:"2.5 Burp Suite",d:"Burp بتشوف وتعدل الطلبات بينك وبين الموقع. اهم اداة في Bug Bounty.",task:"نزل Burp Community",s:"80% من Bug Bounty بـ Burp.",q:"Burp بيعمل ايه؟",opts:["بيعدل الطلبات","بيعمل فيديو","بيحمل العاب"],ans:0}
+]},
+{title:"المرحلة 3: المتقدم",color:"#FF8800",desc:"PrivEsc و SSRF و Business Logic و Social Engineering",lessons:[
+{t:"3.1 Privilege Escalation",d:"اول دخول بيكون مستخدم عادي. الشطارة توصل لـ root. دور على SUID و Cron و history.",task:"find / -perm -4000 2>/dev/null",s:"80% من PrivEsc من حاجة منسية.",q:"SUID معناه؟",opts:["ملف بيشتغل بصلاحية root","ملف محذوف","ملف صورة"],ans:0},
+{t:"3.2 SSRF",d:"SSRF لما تخلي السيرفر يطلب موقع تاني بدالك. خطير جدا.",task:"ذاكر على PortSwigger SSRF",s:"SSRF من اخطر الثغرات.",q:"SSRF بيعمل ايه؟",opts:["بيخلي السيرفر يطلب بدالك","بيغير لون الموقع","بيحذف حسابك"],ans:0},
+{t:"3.3 Business Logic",d:"تشتري ب 0 جنيه او تعمل خصم 100%. المبرمج نسي يتحقق. الادوات مش بتلاقيها.",task:"فكر في منطق اي موقع تدريبي",s:"الشركات بتدفع عليها اكتر.",q:"ليه Business Logic غالية؟",opts:["الادوات مش بتلاقيها، البني ادم بس","لانها سهلة","لانها قديمة"],ans:0},
+{t:"3.4 Social Engineering",d:"اكبر اختراقات حصلت بكلمة مش بثغرة. عمرك ما تبعت كود لحد.",task:"شغل 2FA على كل حساباتك",s:"الهاكر بيخترق البني ادم قبل الجهاز.",q:"لو حد طلب كودك تعمل ايه؟",opts:["متبعتش ابدا","ابعته بسرعة","ابعته لصاحبك"],ans:0},
+{t:"3.5 تقرير احترافي",d:"عنوان واضح، خطوات، اثبات، تأثير، حل. التقرير الواضح هو اللي بيجيب فلوس.",task:"اكتب تقرير لثغرة في لابنا",s:"تقرير وحش = ثغرة بتترفض.",q:"ايه اهم حاجة في التقرير؟",opts:["خطوات واضحة واثبات","لون الخط","اسمك"],ans:0}
+]},
+{title:"المرحلة 4: المحترف - Bug Bounty",color:"#AA00FF",desc:"ازاي تكسب فلوس حلال، وازاي تبقى Bug Hunter",lessons:[
+{t:"4.1 HackerOne",d:"سجل في HackerOne و Bugcrowd. اختار برنامج واحد وركز فيه شهر.",task:"اعمل حساب واقرا 5 تقارير",s:"اللي بيتنطط مش بيوصل.",q:"اول خطوة في Bug Bounty؟",opts:["اختار برنامج واحد وركز","سجل في 10 برامج","ابعت تقرير عشوائي"],ans:0},
+{t:"4.2 اقرا التقارير المقبولة",d:"اقرا التقارير اللي اتقبلت قبل كده، هتعرف الشركة بتدفع على ايه.",task:"اقرا 5 تقارير على HackerOne",s:"التقارير المقبولة هي منهجك.",q:"ليه تقرا تقارير مقبولة؟",opts:["تعرف الشركة بتدفع على ايه","عشان تنسخها","عشان تضحك"],ans:0},
+{t:"4.3 ابعت اول تقرير",d:"متبعتش من غير اثبات. فيديو + خطوات + تأثير + حل.",task:"جهز تقريرك الاول",s:"اول تقرير هو اصعب واحد.",q:"التقرير لازم يكون فيه؟",opts:["اثبات وخطوات","ايموجي كتير","رابط فيسبوك"],ans:0},
+{t:"4.4 خطة 90 يوم",d:"اسبوعين اساسيات، اسبوعين PortSwigger، شهر TryHackMe، شهر ركز في برنامج واحد.",task:"اكتب الخطة وعلقها",s:"اللي بيمشي على خطة بيوصل.",q:"خطة 90 يوم بتبدأ بـ؟",opts:["اساسيات","Bug Bounty على طول","حذف كل حاجة"],ans:0},
+{t:"4.5 مستقبلك",d:"كمل، متستسلمش. اول 3 شهور صعبة. اللي بيكمل هو اللي بياخد. انت دلوقتي محترف.",task:"خد شهادتك من البروفايل",s:"NEVER STOP LEARNING.",q:"ايه سر النجاح؟",opts:["الاستمرار","الاستسلام","النسخ"],ans:0}
+]}
+];
+var CHALS=[
+{q:"لو شفت لينك فيسبوك بس الدومين فيه حرف مختلف، تعمل ايه؟",opts:["ادخل عادي","متدخلش واتأكد من الدومين","ابعت باسوردي"],ans:1,xp:100},
+{q:"ايه اللي بيحمي من SQLi؟",opts:["Prepared Statements","حذف الموقع","تغيير اللون"],ans:0,xp:100},
+{q:"IDOR معناها؟",opts:["تغيير رقم وتشوف بيانات حد تاني","تغيير صورتك","تغيير باسوردك"],ans:0,xp:100},
+{q:"ايه امر عرض الملفات؟",opts:["rm","ls -la","kill"],ans:1,xp:50},
+{q:"ايه امر تشغيل سيرفر محلي ببايثون؟",opts:["python -m http.server 8000","rm -rf /","whoami"],ans:0,xp:50},
+{q:"لو حد قالك انا من الدعم ابعت الكود، تعمل ايه؟",opts:["ابعت الكود","متبعتش ابدا","ابعت صورة بطاقتك"],ans:1,xp:100},
+{q:"Burp Suite بتعمل ايه؟",opts:["بتعدل الطلبات بينك وبين الموقع","بتعمل العاب","بتحذف الملفات"],ans:0,xp:100},
+{q:"ايه اول خطوة قبل الفحص؟",opts:["Recon","اختراق","تخمين"],ans:0,xp:100}
+];
+var ALL=[
+["BASIC","تحديث النظام","بيحدث كل الحزم","pkg update && pkg upgrade -y"],
+["BASIC","تثبيت بايثون","بينزل بايثون","pkg install python -y"],
+["BASIC","تثبيت git","بينزل git","pkg install git -y"],
+["BASIC","تثبيت nano","محرر نصوص","pkg install nano -y"],
+["BASIC","تثبيت curl","اداة تحميل","pkg install curl -y"],
+["BASIC","تثبيت nmap","فحص شبكتك انت","pkg install nmap -y"],
+["BASIC","اذن التخزين","بيخلي Termux يشوف ملفاتك","termux-setup-storage"],
+["BASIC","مسح الشاشة","تنضيف الشاشة","clear"],
+["FILES","عرض الملفات","بيعرض كل الملفات","ls -la"],
+["FILES","انشاء مجلد","مجلد جديد","mkdir myproject"],
+["FILES","ادخل مجلد","دخول مجلد","cd myproject"],
+["FILES","انشاء ملف","ملف جديد","touch main.py"],
+["FILES","قراءة الملف","عرض محتوى الملف","cat main.py"],
+["FILES","نسخ ملف","نسخ الملف","cp main.py copy.py"],
+["FILES","حذف ملف","حذف ملف","rm main.py"],
+["NET","فحص النت","هل النت شغال","ping -c 4 google.com"],
+["NET","فحص شبكتك","فحص راوتر بيتك انت","nmap 192.168.1.1"],
+["NET","سيرفر محلي","سيرفر على جهازك","python -m http.server 8000"],
+["NET","عرض IP العام","IP بتاعك","curl ifconfig.me"],
+["PYTHON","تشغيل بايثون","تشغيل ملف","python main.py"],
+["PYTHON","تثبيت مكتبة","مكتبة requests","pip install requests"],
+["PYTHON","تثبيت Flask","عمل موقع","pip install flask"],
+["PYTHON","عرض المكتبات","المكتبات المثبتة","pip list"],
+["GIT","انشاء مستودع","مستودع جديد","git init"],
+["GIT","استنساخ مشروع","تنزيل مشروع","git clone https://github.com/user/repo.git"],
+["GIT","حالة المشروع","حالة الملفات","git status"],
+["GIT","حفظ التغييرات","حفظ commit","git commit -m first"],
+["GIT","دفع للمستودع","رفع على جيت هب","git push origin main"],
+["SYS","معلومات النظام","معلومات الجهاز","uname -a"],
+["SYS","الذاكرة","استهلاك الذاكرة","free -h"],
+["SYS","مساحة القرص","مساحة التخزين","df -h"],
+["SYS","معلومات البطارية","حالة البطارية","termux-battery-status"]
+];
+var done=JSON.parse(localStorage.getItem("mr_done")||"[]");
+var chalDone=JSON.parse(localStorage.getItem("mr_chal")||"[]");
+var xp=parseInt(localStorage.getItem("mr_xp")||"0");
+var curLesson=null;
+function save(){localStorage.setItem("mr_done",JSON.stringify(done));localStorage.setItem("mr_chal",JSON.stringify(chalDone));localStorage.setItem("mr_xp",xp);updateStats();}
+function updateStats(){
+var total=20;var per=Math.round(done.length/total*100);
+var level="مبتدئ";if(xp>=500)level="متوسط";if(xp>=1000)level="متقدم";if(xp>=1500)level="محترف";
+document.getElementById("xpText").innerText="المستوى: "+level+" | XP: "+xp;
+document.getElementById("progText").innerText=per+"% خلصت";
+document.getElementById("xpFill").style.width=per+"%";
+document.getElementById("statLessons").innerText=done.length+"/20";
+document.getElementById("statChal").innerText=chalDone.length+"/8";
+document.getElementById("statXP").innerText=xp+" XP";
+var cert=document.getElementById("certBox");
+if(cert){if(done.length>=20){cert.innerHTML="<div class=cert><h2>🏆 مبروك! خلصت الاكاديمية</h2><p style=margin-top:8px>انت دلوقتي Bug Hunter محترف. خد شهادتك.</p></div>"}else{cert.innerHTML="<div style=padding:16px;text-align:center;color:#999;font-size:13px>خلص 20 درس عشان تفتح الشهادة - فاضل "+(20-done.length)+" درس</div>"}}
+}
+function renderStages(){
+var box=document.getElementById("stages");box.innerHTML="";
+STAGES.forEach(function(st,si){
+var d=document.createElement("div");d.className="stage";
+var locked=false;if(si>0){var prevDone=0;for(var i=0;i<5;i++){if(done.includes((si-1)*5+i))prevDone++;}if(prevDone<5)locked=true;}
+if(locked)d.classList.add("locked");
+var html="<h3 style=color:"+st.color+">"+st.title+"</h3><div class=meta>"+st.desc+"</div><p>"+(locked?"🔒 مقفولة - خلص المرحلة اللي قبلها الاول":"✅ مفتوحة - دوس على درس عشان تبدأ")+"</p><div class=lessons-list>";
+st.lessons.forEach(function(L,li){
+var gi=si*5+li;var isDone=done.includes(gi);
+html+="<div class=lesson-row "+(isDone?"done":"")+" onclick=openLesson("+si+","+li+")><div><b>"+L.t+"</b><br><span>"+(isDone?"خلصت +50 XP":"لسه - دوس عشان تذاكر")+"</span></div><div class=check>"+(isDone?"✓":"○")+"</div></div>";
+});
+html+="</div>";
+d.innerHTML=html;if(locked){d.onclick=function(){alert("خلص المرحلة اللي قبلها الاول عشان تفتح دي");}}
+box.appendChild(d);
+});
+}
+function openLesson(si,li){
+if(si>0){var prev=0;for(var i=0;i<5;i++){if(done.includes((si-1)*5+i))prev++;}if(prev<5){alert("خلص المرحلة اللي قبلها الاول");return;}}
+curLesson=si*5+li;var L=STAGES[si].lessons[li];
+document.getElementById("lessonTop").innerText=L.t;
+document.getElementById("lessonContent").innerHTML="<div class=lesson-box><h3>"+L.t+"</h3><p style=margin-top:8px>"+L.d+"</p><div class=task>"+L.task+"</div><div class=secret>سر PRO: "+L.s+"</div></div>";
+var qbox=document.getElementById("quizBox");
+qbox.innerHTML="<h3>🧠 اختبار سريع - جاوب صح عشان تاخد XP</h3><p style=color:#ccc;font-size:13px;margin-top:6px>"+L.q+"</p>";
+L.opts.forEach(function(o,oi){
+var b=document.createElement("button");b.innerText=o;b.onclick=function(){if(oi===L.ans){alert("صح! +20 XP");xp+=20;save();b.style.background="#00CC00";}else{alert("غلط، حاول تاني. فكر في الدرس.");b.style.background="#FF0000";}};
+qbox.appendChild(b);
+});
+var btn=document.getElementById("finishBtn");
+btn.innerText=done.includes(curLesson)?"الدرس ده خلص ✓ - ارجع للخارطة":"خلصت الدرس - خد +50 XP ✓";
+showPage("pLesson");
+}
+function finishLesson(){
+if(curLesson===null)return;
+if(done.includes(curLesson)){showPage("pRoad");return;}
+done.push(curLesson);xp+=50;save();renderStages();alert("عاش! +50 XP. كمل اللي بعده.");showPage("pRoad");
+}
+function renderChals(){
+var box=document.getElementById("chals");box.innerHTML="";
+CHALS.forEach(function(c,i){
+var d=document.createElement("div");d.className="lesson-box";
+var isDone=chalDone.includes(i);
+var html="<h3>تحدي "+(i+1)+" - "+c.xp+" XP "+(isDone?"✓ خلص":"")+"</h3><p style=margin-top:8px>"+c.q+"</p>";
+d.innerHTML=html;
+c.opts.forEach(function(o,oi){
+var b=document.createElement("button");b.style.cssText="display:block;width:100%;margin-top:8px;padding:12px;background:#1a1a1a;color:#fff;border:1px solid #333;border-radius:12px;text-align:right";b.innerText=o;
+b.onclick=function(){if(isDone){alert("خلصته قبل كده");return;}if(oi===c.ans){chalDone.push(i);xp+=c.xp;save();renderChals();alert("صح! +"+c.xp+" XP");}else{alert("غلط، حاول تاني");}};
+d.appendChild(b);
+});
+box.appendChild(d);
+});
+}
+function tryLab(){
+var v=document.getElementById("labInput").value.trim();
+var out=document.getElementById("labOut");
+if(v==="user/1"){out.innerText="user/1: احمد - ايميلك انت - ده حسابك، تمام.";}
+else if(v==="user/2"){out.innerText="⚠️ لقيت IDOR! شفت بيانات user/2 من غير اذن في اللاب. في الحقيقي دي ثغرة بتجيب فلوس. الحل: تحقق من الملكية في السيرفر. +20 XP";if(!chalDone.includes(99)){xp+=20;save();}}
+else if(v==="user/3"){out.innerText="⚠️ لقيت IDOR تاني! user/3. انت كده فهمت الثغرة.";}
+else{out.innerText="اكتب user/1 او user/2 او user/3";}
+}
+function tryXSS(){
+var v=document.getElementById("labInput2").value;
+var out=document.getElementById("labOut2");
+if(v.includes("<script")||v.includes("<img")){out.innerText="🛡️ اللاب صد الكود! الموقع المحمي بيعمل فلترة وتشفير. لو الموقع مش محمي، الكود كان هيتنفذ. دي هي XSS.";}
+else if(v===""){out.innerText="اكتب حاجة الاول";}
+else{out.innerText="اهلا "+v+" - البحث اشتغل عادي، مفيش كود ضار.";}
+}
+function tryProtect(){document.getElementById("labOut3").innerText="الحل الصح:\n1. متدخلش\n2. اتأكد من الدومين حرف حرف\n3. لو شكيت، ادخل من التطبيق الرسمي مش من اللينك\n4. شغل 2FA\nانت كده حميت نفسك.";}
+function makeCert(){
+var n=document.getElementById("myName").value.trim()||"بطل MR ACADEMY";
+if(done.length<20){alert("خلص 20 درس الاول، فاضل "+(20-done.length));return;}
+document.getElementById("certBox").innerHTML="<div class=cert><h2>شهادة MR ACADEMY</h2><p style=margin-top:10px>نشهد ان</p><h2 style=color:#fff;font-size:26px;margin:8px 0>"+n+"</h2><p>خلص 4 مراحل و 20 درس و 8 تحديات</p><p style=margin-top:10px;color:#FFAA00>ETHICAL HACKING PRO - NEVER STOP LEARNING</p><p style=margin-top:8px>MR | MOHAMED RASHIDI</p></div>";
+}
+function resetProg(){if(confirm("هتصفر كل تقدمك؟")){done=[];chalDone=[];xp=0;save();renderStages();renderChals();alert("اتصفر، ابدأ من جديد.");}}
+var cur="ALL";
+function render(){
+var box=document.getElementById("cmds");if(!box)return;box.innerHTML="";
+ALL.filter(function(c){return cur==="ALL"||c[0]===cur}).forEach(function(c,i){
+var d=document.createElement("div");d.className="cmd";
+d.innerHTML="<b>"+c[1]+"</b><span>"+c[2]+"</span><div class=cmd-code><code>$ "+c[3]+"</code><button class=copy-btn>نسخ</button></div>";
+d.querySelector(".copy-btn").onclick=function(){navigator.clipboard.writeText(c[3]);this.innerText="تم";};
+box.appendChild(d);
+});
+}
+function filterCmd(f,el){cur=f;document.querySelectorAll(".cat").forEach(function(b){b.classList.remove("active")});el.classList.add("active");render();}
+render();renderStages();renderChals();updateStats();
+function showPage(id){document.querySelectorAll(".page").forEach(function(p){p.classList.remove("active")});document.getElementById(id).classList.add("active");window.scrollTo(0,0);}
+var p=0;var t=setInterval(function(){p+=5;if(p>100)p=100;document.getElementById("bar").style.width=p+"%";document.getElementById("loadTxt").innerText="Loading.. "+p+"%";if(p>=100){clearInterval(t);showPage("p1");}},15);
+</script>
+</body>
+</html>
